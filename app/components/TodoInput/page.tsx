@@ -26,7 +26,7 @@ const TodoInput = ({ addTodo }:any) => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         type="submit"
-        className="ml-4 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-2xl shadow-sm"
+        className="ml-4 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-2xl"
       >
         Add
       </motion.button>

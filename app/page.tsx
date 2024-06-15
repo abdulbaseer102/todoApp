@@ -2,7 +2,7 @@
 import { useState, useEffect, SetStateAction } from 'react';
 import Head from 'next/head';
 import Navbar from './components/navbar/page';
-import Sidebar from './components/sidebar/page'; // Import the Sidebar component
+// Import the Sidebar component
 import TodoInput from './components/TodoInput/page';
 import TodoList from './components/TodoList/page';
 

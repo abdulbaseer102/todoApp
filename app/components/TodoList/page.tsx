@@ -1,4 +1,4 @@
-// components/TodoList.jsx
+'use client'
 import { AnimatePresence, motion } from 'framer-motion';
 import TodoItem from '../TodoItems/page';
 import { Key } from 'react';

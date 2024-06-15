@@ -1,11 +1,11 @@
-// components/TodoInput.jsx
+'use client'
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
-const TodoInput = ({ addTodo }) => {
+const TodoInput = ({ addTodo }:any) => {
   const [input, setInput] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if (input.trim()) {
       addTodo(input);

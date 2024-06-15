@@ -1,18 +1,24 @@
-'use client'
-import { useState, useEffect, SetStateAction } from 'react';
+ 'use client'
+
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Navbar from './components/navbar/page';
-// Import the Sidebar component
 import TodoInput from './components/TodoInput/page';
 import TodoList from './components/TodoList/page';
 
+interface Todo {
+  id: number;
+  text: string;
+  completed: boolean;
+}
+
 export default function Home() {
-  const [todos, setTodos] = useState([]);
-  const [filteredTodos, setFilteredTodos] = useState([]);
-  const [filter, setFilter] = useState('all');
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [filteredTodos, setFilteredTodos] = useState<Todo[]>([]);
+  const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
 
   useEffect(() => {
-    const storedTodos = JSON.parse(localStorage.getItem('todos')) || [];
+    const storedTodos = JSON.parse(localStorage.getItem('todos') || '[]') as Todo[];
     setTodos(storedTodos);
   }, []);
 
@@ -21,7 +27,7 @@ export default function Home() {
     filterTodos(filter);
   }, [todos, filter]);
 
-  const addTodo = (text: any) => {
+  const addTodo = (text: string) => {
     const newTodo = {
       id: Date.now(),
       text,
@@ -30,31 +36,31 @@ export default function Home() {
     setTodos([...todos, newTodo]);
   };
 
-  const toggleComplete = (id: any) => {
-    setTodos(todos.map((todo) =>
+  const toggleComplete = (id: number) => {
+    setTodos(todos.map(todo =>
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
     ));
   };
 
-  const removeTodo = (id: any) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+  const removeTodo = (id: number) => {
+    setTodos(todos.filter(todo => todo.id !== id));
   };
 
-  const updateTodo = (id: any, newText: any) => {
-    setTodos(todos.map((todo) =>
+  const updateTodo = (id: number, newText: string) => {
+    setTodos(todos.map(todo =>
       todo.id === id ? { ...todo, text: newText } : todo
     ));
   };
 
-  const clearCompleted = (completedIds: string | any[]) => {
-    setTodos(todos.filter(todo => !completedIds.includes(todo.id)));
+  const clearCompleted = () => {
+    setTodos(todos.filter(todo => !todo.completed));
   };
 
-  const toggleFilter = (type: SetStateAction<string>) => {
+  const toggleFilter = (type: 'all' | 'active' | 'completed') => {
     setFilter(type);
   };
 
-  const filterTodos = (type: string) => {
+  const filterTodos = (type: 'all' | 'active' | 'completed') => {
     switch (type) {
       case 'active':
         setFilteredTodos(todos.filter(todo => !todo.completed));
@@ -80,7 +86,7 @@ export default function Home() {
         <Navbar />
         <div className="flex flex-col items-center justify-center p-10">
           <h1 className="text-5xl font-bold mb-10 text-white">Todo App</h1>
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full  max-w-[100%] h-[100%]">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-[100%] h-[100%]">
             <TodoInput addTodo={addTodo} />
             <TodoList
               todos={filter === 'all' ? todos : filteredTodos}
